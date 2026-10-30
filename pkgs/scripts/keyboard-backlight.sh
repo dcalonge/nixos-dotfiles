@@ -1,0 +1,14 @@
+
+DEVICE="platform::kbd_backlight"
+
+if [ "$1" = "up" ]; then
+  brightnessctl --device="$DEVICE" set +1 >/dev/null 2>&1
+elif [ "$1" = "down" ]; then
+  brightnessctl --device="$DEVICE" set 1- >/dev/null 2>&1
+else
+  exit 1
+fi
+
+brightness=$(cat /sys/class/leds/$DEVICE/brightness)
+percent=$((brightness * 100 / 2))
+notify-send " 󰌌 " -t 1000 -u low -h int:value:$percent -c "osd" --hint=string:x-dunst-stack-tag:osd

@@ -1,0 +1,46 @@
+scheme: "Matugen nvim"
+author: "Matugen"
+
+# ==========================================
+# UI Layout & Deep Backgrounds
+# ==========================================
+# Deep pitch-black depth for extreme text pop
+base00: "171216" 
+# Margins, Panels, status lines
+base01: "171216"             
+# Highly visible selections and search match tracking
+base02: "393338" 
+# High-visibility comments (brought forward so they don't disappear)
+base03: "d1c3cc"       
+
+# ==========================================
+# Core Code Text Elements
+# ==========================================
+# Sharp midtones for punctuation, operators, and brackets
+base04: "998d96"                  
+# Stark light default text for core variables
+base05: "ebdfe6"               
+# Extra bright secondary highlights
+base06: "352e33"       
+# Pure primary pop accent color
+base07: "efb4e9"                  
+
+# ==========================================
+# Vibrant Syntax Elements (Using High-Chroma Valid Tokens)
+# ==========================================
+# Variables & Tags (Pure Red Error Accent)
+base08: "ffb4ab"                    
+# Numbers, Constants, Booleans (Bright Tertiary accent)
+base09: "f6b8aa"                 
+# Classes, Structural Types, Enums (Vibrant Inverse Primary/Gold)
+base0A: "7e4d7c"           
+# Strings, Text Literals (Vibrant Secondary Green/Teal)
+base0B: "d9bfd3"                
+# Special characters, Regex Escapes (High-contrast On Secondary Container)
+base0C: "f6dbf0"    
+# Functions, Methods, Called Logic (Vibrant Blue/Primary)
+base0D: "efb4e9"                  
+# Keywords, Conditionals, Loops (Stark, urgent Error emphasis)
+base0E: "ffb4ab"                    
+# Delimiters and rare sub-properties
+base0F: "4e444b"

@@ -1,0 +1,11 @@
+
+sleep 0.2
+brightness=$(cat /sys/class/leds/input*::capslock/brightness | grep -q 1 && echo 1 || echo 0)
+
+if [ "$brightness" -eq 1 ]; then
+  notify-send "CAPS LOCKED" -t 1000 -u low -c "osd-text" --hint=string:x-dunst-stack-tag:osd
+elif [ "$brightness" -eq 0 ]; then
+  notify-send "caps unlocked" -t 1000 -u low -c "osd-text" --hint=string:x-dunst-stack-tag:osd
+else
+  echo "Unknown state: $brightness"
+fi

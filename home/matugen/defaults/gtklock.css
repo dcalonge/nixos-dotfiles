@@ -1,0 +1,72 @@
+* {
+    all: unset;
+}
+
+.background {
+    background-image: url("/home/daniel/Pictures/wallpaper");
+    background-size: cover;
+    background-position: center;
+}
+
+#window-box {
+    background-color: #171216;
+    color: #ebdfe6;
+    margin: 18px;
+    padding: 48px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+#window-box #clock-label {
+    color: #ebdfe6;
+    font-size: 4em;
+}
+
+#window-box #date-label {
+    color: #d1c3cc;
+}
+
+#window-box #input-label {
+    opacity: 0;
+    font-size: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#window-box #input-field {
+    margin-top: 16px;
+    background-color: #2e282d;
+    color: #ebdfe6;
+    border: 1px solid #998d96;
+    min-height: 32px;
+    padding-left: 1em;
+    padding-right: 1em;
+    letter-spacing: 0.3em;
+}
+
+#window-box #input-field:focus {
+    border-color: #efb4e9;
+}
+
+#window-box #unlock-button {
+    background-color: #efb4e9;
+    color: #4b1f4b;
+    padding: 6px 12px;
+}
+
+#window-box #unlock-button:hover {
+    background-color: #643663;
+    color: #ffd6f8;
+}
+
+#window-box #unlock-button:active {
+    background-color: #d9bfd3;
+    color: #3c2b3b;
+}
+
+#window-box #warning-label {
+    color: #f6b8aa;
+}
+
+#window-box #error-label {
+    color: #ffb4ab;
+}

@@ -1,0 +1,105 @@
+
+output=$(wlr-randr --json | jq -r '.[].name' | fuzzel --dmenu -p "Select an output:")
+
+if [ -z "$output" ]; then
+  exit 1
+fi
+
+scaling=$(wlr-randr --json | jq -r --arg output "$output" '.[] | select(.name == $output) | .scale')
+adaptive_sync=$(wlr-randr --json | jq -r --arg output "$output" '.[] | select(.name == $output) | .adaptive_sync')
+enabled=$(wlr-randr --json | jq -r --arg output "$output" '.[] | select(.name == $output) | .enabled')
+
+change_option=$(printf "Mode\nScaling\nAdaptive Sync\nPower" | fuzzel --dmenu -p "Options for $output:")
+
+if [ -z "$change_option" ] || [ "$change_option" = "Exit" ]; then
+  exit 0
+fi
+
+if [ -z "$change_option" ]; then
+  exit 1
+fi
+
+if [ "$change_option" = "Mode" ]; then
+  current_mode=$(wlr-randr --json | jq -r --arg output "$output" '
+  .[] | select(.name == $output) | .modes[] | select(.current == true) |
+  "\(.width)x\(.height) @ \(.refresh | tostring)"')
+  echo "$current_mode"
+  # List all modes, mark current one
+  modes=$(wlr-randr --json | jq -r --arg output "$output" --arg current "$current_mode" '.[] | select(.name == $output) | .modes[] | "\(.width)x\(.height) @ \(.refresh | tostring)" | if . == $current then "\(.)  󰄬" else . end')
+
+  if [ -z "$modes" ]; then
+    exit 1
+  fi
+
+  mode=$(echo "$modes" | fuzzel --dmenu -p "Select a mode:")
+
+  if [ -z "$mode" ]; then
+    exit 1
+  fi
+
+  selected_mode=$(echo "$mode" | sed 's/ @ /@/; s/  .*//')
+
+  brightness=$(brightnessctl get)
+
+  wlr-randr --output "$output" --mode "$selected_mode"
+  exec brightnessctl set "$brightness"
+fi
+
+if [ "$change_option" = "Scaling" ]; then
+  scaling_option=$(printf "%s\n" \
+    "$([ "$scaling" = "1.000000" ] && echo "1.0 󰄬" || echo "1.0")" \
+    "$([ "$scaling" = "1.250000" ] && echo "1.25 󰄬" || echo "1.25")" \
+    "$([ "$scaling" = "1.500000" ] && echo "1.5 󰄬" || echo "1.5")" \
+    "$([ "$scaling" = "1.750000" ] && echo "1.75 󰄬" || echo "1.75")" \
+    "$([ "$scaling" = "2.000000" ] && echo "2.0 󰄬" || echo "2.0")" |
+    fuzzel --dmenu -p "Select scaling:")
+
+  if [ -z "$scaling_option" ]; then
+    exit 1
+  fi
+
+  exec wlr-randr --output "$output" --scale "$scaling_option"
+fi
+
+if [ "$change_option" = "Adaptive Sync" ]; then
+  echo "$adaptive_sync"
+  adaptive_sync_option=$(
+    printf "%s\n" \
+      "$([ "$adaptive_sync" = "true" ] && echo "Enabled 󰄬" || echo "Enabled")" \
+      "$([ "$adaptive_sync" = "false" ] && echo "Disabled 󰄬" || echo "Disabled")" |
+      fuzzel --dmenu -p "Toggle Adaptive Sync:"
+  )
+
+  if [ -z "$adaptive_sync_option" ]; then
+    exit 1
+  fi
+
+  if [ "$adaptive_sync_option" = "Enabled" ]; then
+    new_adaptive_sync="enabled"
+  elif [ "$adaptive_sync_option" = "Disabled" ]; then
+    new_adaptive_sync="disabled"
+  else
+    exit 1
+  fi
+
+  exec wlr-randr --output "$output" --adaptive-sync "$new_adaptive_sync"
+fi
+
+if [ "$change_option" = "Power" ]; then
+  output_status=$(printf "%s\n" \
+    "$([ "$enabled" = "true" ] && echo "Enable 󰄬" || echo "Enable")" \
+    "$([ "$enabled" = "false" ] && echo "Disable 󰄬" || echo "Disable")" |
+    fuzzel --dmenu -p "Power $output:")
+
+  if [ -z "$output_status" ]; then
+    exit 1
+  fi
+
+  if [ "$output_status" = "Enable" ]; then
+    exec wlr-randr --output "$output" --on
+  elif [ "$output_status" = "Disable" ]; then
+    exec wlr-randr --output "$output" --off
+  else
+    exit 1
+  fi
+fi

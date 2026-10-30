@@ -1,0 +1,7 @@
+background-color=#171216
+text-color=#ebdfe6
+border-color=#efb4e9
+progress-color=source #efb4e9
+
+[category="osd"]
+text-color=#171216
