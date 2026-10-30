@@ -63,7 +63,6 @@ in
     '';
   };
 
-  # Session services, started by mango-session.target
   services.cliphist.enable = true;
   services.polkit-gnome.enable = true;
 
@@ -93,7 +92,7 @@ in
     Install.WantedBy = [ config.wayland.systemd.target ];
   };
 
-  # Toggled with SUPER+s instead of starting with the session
+  # Started with SUPER+s, not with the session
   services.wlsunset = {
     enable = true;
     latitude = 40.4165;

@@ -11,7 +11,6 @@ let
       text = builtins.replaceStrings [ "@flakeDir@" ] [ vars.flakeDir ] (
         builtins.readFile ./scripts/${name}.sh
       );
-      # Plain sh semantics, like the original scripts
       bashOptions = [ ];
     };
 in

@@ -31,7 +31,7 @@ in
       variables = [ "--all" ];
     };
 
-    # Must be non-empty: the systemd activation runs from autostart.sh
+    # Must be non-empty, or the module skips the systemd session startup
     autostart_sh = "true";
 
     settings = {
@@ -82,10 +82,10 @@ in
       trackpad_disable_while_typing = 1;
       trackpad_left_handed = 0;
       trackpad_middle_button_emulation = 0;
-      trackpad_scroll_method = 1; # two-finger
+      trackpad_scroll_method = 1;
       trackpad_click_method = 0;
-      trackpad_send_events_mode = 0; # enabled
-      trackpad_accel_profile = 2; # adaptive
+      trackpad_send_events_mode = 0;
+      trackpad_accel_profile = 2;
       trackpad_accel_speed = 0.0;
       button_map = 0;
 
@@ -181,7 +181,7 @@ in
         "unfold,spawn,${wlr-randr} --output eDP-1 --on"
       ];
 
-      # Written by matugen; optional so the build-time check doesn't need it
+      # Written by matugen at runtime
       source_optional = "~/.config/mango/colors.conf";
     };
 

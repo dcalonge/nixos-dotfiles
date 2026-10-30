@@ -18,7 +18,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Not in nixpkgs
     helium = {
       url = "github:schembriaiden/helium-browser-nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,30 +37,49 @@
     let
       vars = {
         user = "daniel";
-        host = "laptop";
         flakeDir = "/home/daniel/nixos-dotfiles";
       };
-      host = self.nixosConfigurations.${vars.host};
+
+      mkHost =
+        host:
+        let
+          hostVars = vars // {
+            inherit host;
+          };
+        in
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+            vars = hostVars;
+          };
+          modules = [
+            { nixpkgs.overlays = [ (import ./pkgs { inherit inputs vars; }) ]; }
+            ./configuration.nix
+            ./hosts/${host}
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "hm-backup";
+                extraSpecialArgs = {
+                  inherit inputs;
+                  vars = hostVars;
+                };
+                users.${vars.user} = import ./home;
+              };
+            }
+          ];
+        };
     in
     {
-      nixosConfigurations.${vars.host} = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs vars; };
-        modules = [
-          { nixpkgs.overlays = [ (import ./pkgs { inherit inputs vars; }) ]; }
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "hm-backup";
-              extraSpecialArgs = { inherit inputs vars; };
-              users.${vars.user} = import ./home;
-            };
-          }
-        ];
-      };
+      nixosConfigurations = nixpkgs.lib.genAttrs [
+        "laptop-amd"
+        "laptop-intel"
+      ] mkHost;
 
-      formatter.${host.pkgs.stdenv.hostPlatform.system} = host.pkgs.nixfmt;
+      formatter = nixpkgs.lib.mapAttrs' (
+        _: host: nixpkgs.lib.nameValuePair host.pkgs.stdenv.hostPlatform.system host.pkgs.nixfmt
+      ) self.nixosConfigurations;
     };
 }

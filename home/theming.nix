@@ -95,8 +95,7 @@ in
 
   xdg.configFile."matugen/config.toml".source = matugenConfig;
 
-  # matugen rewrites these files at runtime, so they are not managed by Home
-  # Manager; seed them once so every include exists on a fresh install.
+  # Not managed by Home Manager so matugen can rewrite them; seeded once.
   home.activation.seedMatugenColors = lib.hm.dag.entryAfter [ "linkGeneration" ] (
     lib.concatStrings (
       lib.mapAttrsToList (_: t: ''

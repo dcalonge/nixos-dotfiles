@@ -81,7 +81,6 @@ in
     enable = true;
     configFiles = ./nvim;
     pluginSource = "nixpkgs";
-    # Provided by Mason on a regular LazyVim install
     extraPackages = with pkgs; [
       lua-language-server
       stylua
