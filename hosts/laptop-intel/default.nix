@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  vars,
-  ...
-}:
+{ pkgs, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -16,7 +11,4 @@
   services.thermald.enable = true;
 
   hardware.intel-gpu-tools.enable = true;
-
-  # VA-API rather than Vulkan video on this older GPU
-  home-manager.users.${vars.user}.programs.mpv.config.hwdec = lib.mkForce "vaapi";
 }

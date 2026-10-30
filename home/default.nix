@@ -41,7 +41,6 @@ in
       libnotify
       xdg-utils
       pulsemixer
-      pulseaudio
       iwmenu
       bzmenu
       bluetuith

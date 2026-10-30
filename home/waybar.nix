@@ -1,13 +1,13 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 let
-  bin = pkg: name: "${pkg}/bin/${name}";
   scripts = pkgs.dotfiles-scripts;
-  pkill = bin pkgs.procps "pkill";
-  bluetoothctl = bin pkgs.bluez "bluetoothctl";
+  pkill = lib.getExe' pkgs.procps "pkill";
+  bluetoothctl = lib.getExe' pkgs.bluez "bluetoothctl";
 in
 {
   programs.waybar = {
@@ -97,8 +97,8 @@ in
         tooltip-format = "{essid}\t{gwaddr}";
         tooltip-format-disconnected = "Disconnected";
         tooltip-format-disabled = "Disabled";
-        on-click-right = "${bin pkgs.util-linux "rfkill"} toggle wifi";
-        on-click = "${pkill} fuzzel || ${bin pkgs.iwmenu "iwmenu"} -l fuzzel";
+        on-click-right = "${lib.getExe' pkgs.util-linux "rfkill"} toggle wifi";
+        on-click = "${pkill} fuzzel || ${lib.getExe' pkgs.iwmenu "iwmenu"} -l fuzzel";
         tooltip = true;
         max-length = 20;
       };
@@ -113,8 +113,8 @@ in
         tooltip-format = "{device_enumerate}";
         tooltip-format-enumerate-connected = "{device_address}";
         tooltip-format-enumerate-connected-battery = "{device_alias} | Battery: {device_battery_percentage}%";
-        on-click-right = "${bluetoothctl} show | ${bin pkgs.gnugrep "grep"} -q 'Powered: yes' && ${bluetoothctl} power off || ${bluetoothctl} power on";
-        on-click = "${pkill} fuzzel || ${bin pkgs.bzmenu "bzmenu"} -l fuzzel";
+        on-click-right = "${bluetoothctl} show | ${lib.getExe' pkgs.gnugrep "grep"} -q 'Powered: yes' && ${bluetoothctl} power off || ${bluetoothctl} power on";
+        on-click = "${pkill} fuzzel || ${lib.getExe' pkgs.bzmenu "bzmenu"} -l fuzzel";
       };
 
       wireplumber = {
@@ -128,8 +128,8 @@ in
         format-muted = "󰖁";
         format-source = "󰍬 ";
         format-source-muted = "";
-        on-click-right = "${bin config.programs.foot.package "foot"} -a foot-floating -e ${bin pkgs.pulsemixer "pulsemixer"}";
-        on-click = "${bin pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        on-click-right = "${lib.getExe' config.programs.foot.package "foot"} -a foot-floating -e ${lib.getExe' pkgs.pulsemixer "pulsemixer"}";
+        on-click = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
         reverse-scrolling = true;
         tooltip = true;
         tooltip-format = "Volume: {volume}%";

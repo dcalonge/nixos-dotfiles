@@ -22,8 +22,6 @@
     ];
     auto-optimise-store = true;
     trusted-users = [ "@wheel" ];
-    substituters = [ "https://cache.nixos.org" ];
-    builders-use-substitutes = true;
   };
 
   programs.nh = {
@@ -104,7 +102,6 @@
 
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
     extraPackages = [ pkgs.libvdpau-va-gl ];
   };
 
@@ -117,10 +114,8 @@
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
-    wireplumber.enable = true;
   };
 
   services.acpid.enable = true;
@@ -132,23 +127,17 @@
   programs.mango.enable = true;
   services.graphical-desktop.enable = true;
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-wlr
-      pkgs.xdg-desktop-portal-gtk
+  # Same routing as the Arch mango-portals.conf; the portals come from programs.mango
+  xdg.portal.config.mango = lib.mkForce {
+    default = [
+      "gtk"
+      "wlr"
     ];
-    config.mango = lib.mkForce {
-      default = [
-        "gtk"
-        "wlr"
-      ];
-      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-      "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
-      "org.freedesktop.impl.portal.Access" = [ "gtk" ];
-      "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
-      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-    };
+    "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+    "org.freedesktop.impl.portal.ScreenCast" = [ "wlr" ];
+    "org.freedesktop.impl.portal.Access" = [ "gtk" ];
+    "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
+    "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
   };
 
   programs.gtklock = {

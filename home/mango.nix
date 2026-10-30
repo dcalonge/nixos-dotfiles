@@ -9,15 +9,14 @@ let
   tags = builtins.genList (i: toString (i + 1)) 9;
   vts = builtins.genList (i: toString (i + 1)) 12;
 
-  bin = pkg: name: "${pkg}/bin/${name}";
-  script = name: bin pkgs.dotfiles-scripts.${name} name;
-  foot = bin config.programs.foot.package "foot";
-  fuzzel = bin config.programs.fuzzel.package "fuzzel";
-  pkill = bin pkgs.procps "pkill";
-  systemctl = bin pkgs.systemd "systemctl";
-  playerctl = bin pkgs.playerctl "playerctl";
-  wlr-randr = bin pkgs.wlr-randr "wlr-randr";
-  qalculate = bin pkgs.qalculate-gtk "qalculate-gtk";
+  script = name: lib.getExe' pkgs.dotfiles-scripts.${name} name;
+  foot = lib.getExe' config.programs.foot.package "foot";
+  fuzzel = lib.getExe' config.programs.fuzzel.package "fuzzel";
+  pkill = lib.getExe' pkgs.procps "pkill";
+  systemctl = lib.getExe' pkgs.systemd "systemctl";
+  playerctl = lib.getExe' pkgs.playerctl "playerctl";
+  wlr-randr = lib.getExe' pkgs.wlr-randr "wlr-randr";
+  qalculate = lib.getExe' pkgs.qalculate-gtk "qalculate-gtk";
 in
 {
   imports = [ inputs.mango.hmModules.mango ];
@@ -67,8 +66,6 @@ in
         "app_id:imv,is_floating:1"
         "app_id:foot-floating,is_floating:1"
       ];
-
-      monitor_rule = "name:^eDP-1$,scale:1.2";
 
       repeat_rate = 25;
       repeat_delay = 600;
@@ -136,14 +133,14 @@ in
         "SUPER,b,spawn,${lib.getExe pkgs.helium}"
         "SUPER,Space,spawn_shell,${pkill} fuzzel || ${fuzzel}"
         "SUPER,r,spawn_shell,${pkill} fuzzel || ${script "wlr-menu"}"
-        "SUPER,e,spawn,${foot} -e ${bin config.programs.yazi.package "yazi"}"
-        "SUPER,n,spawn,${foot} -T neovim -e ${bin config.programs.neovim.finalPackage "nvim"}"
-        "SUPER,p,spawn,${foot} -a foot-floating -e ${bin pkgs.pulsemixer "pulsemixer"}"
+        "SUPER,e,spawn,${foot} -e ${lib.getExe' config.programs.yazi.package "yazi"}"
+        "SUPER,n,spawn,${foot} -T neovim -e ${lib.getExe' config.programs.neovim.finalPackage "nvim"}"
+        "SUPER,p,spawn,${foot} -a foot-floating -e ${lib.getExe' pkgs.pulsemixer "pulsemixer"}"
         "SUPER,c,spawn,${qalculate}"
-        "SUPER,h,spawn,${foot} -T btop -e ${bin config.programs.btop.package "btop"}"
-        "SUPER+SHIFT,a,spawn,${foot} -a foot-floating -e ${bin pkgs.bluetuith "bluetuith"}"
-        "SUPER,w,spawn_shell,${pkill} fuzzel || ${bin pkgs.iwmenu "iwmenu"} -l fuzzel"
-        "SUPER,a,spawn_shell,${pkill} fuzzel || ${bin pkgs.bzmenu "bzmenu"} -l fuzzel"
+        "SUPER,h,spawn,${foot} -T btop -e ${lib.getExe' config.programs.btop.package "btop"}"
+        "SUPER+SHIFT,a,spawn,${foot} -a foot-floating -e ${lib.getExe' pkgs.bluetuith "bluetuith"}"
+        "SUPER,w,spawn_shell,${pkill} fuzzel || ${lib.getExe' pkgs.iwmenu "iwmenu"} -l fuzzel"
+        "SUPER,a,spawn_shell,${pkill} fuzzel || ${lib.getExe' pkgs.bzmenu "bzmenu"} -l fuzzel"
         "SUPER,v,spawn_shell,${pkill} fuzzel || ${script "clipboard-history"}"
         "SUPER,l,spawn_shell,${pkill} fuzzel || ${script "dmenu-logout"}"
         "SUPER,u,spawn_shell,${pkill} fuzzel || ${script "updater"}"

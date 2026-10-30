@@ -35,9 +35,9 @@
       ...
     }@inputs:
     let
-      vars = {
+      vars = rec {
         user = "daniel";
-        flakeDir = "/home/daniel/nixos-dotfiles";
+        flakeDir = "/home/${user}/nixos-dotfiles";
       };
 
       mkHost =
@@ -66,7 +66,10 @@
                   inherit inputs;
                   vars = hostVars;
                 };
-                users.${vars.user} = import ./home;
+                users.${vars.user}.imports = [
+                  ./home
+                  ./hosts/${host}/home.nix
+                ];
               };
             }
           ];

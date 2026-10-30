@@ -81,6 +81,13 @@ in
     enable = true;
     configFiles = ./nvim;
     pluginSource = "nixpkgs";
+    # mini.nvim by store path: lazyvim-nix can't detect plugins in configFiles
+    plugins.colorscheme = ''
+      return {
+        { "LazyVim/LazyVim", opts = { colorscheme = "mini-matugen" } },
+        { dir = "${pkgs.vimPlugins.mini-nvim}", name = "mini.nvim", lazy = false, priority = 1000 },
+      }
+    '';
     extraPackages = with pkgs; [
       lua-language-server
       stylua
@@ -99,10 +106,7 @@ in
     extraConfig = "include ${cfgHome}/zathura/matugen-colors";
   };
 
-  programs.mpv = {
-    enable = true;
-    config.hwdec = "vulkan";
-  };
+  programs.mpv.enable = true;
 
   programs.imv.enable = true;
 

@@ -1,0 +1,16 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: cachix/install-nix-action@v31
+      - name: Evaluate both hosts
+        run: nix flake check --show-trace
+      - name: Formatting
+        run: nix fmt -- --check $(git ls-files '*.nix')
