@@ -3,7 +3,7 @@ SELECTION=$(printf "$OPTIONS" | fuzzel --dmenu)
 
 case "$SELECTION" in
 "update")
-  foot -e bash -c '
+  foot -a foot-floating -e bash -c '
     nh os switch --update "$1" &&
       flatpak update -y
     echo ""
