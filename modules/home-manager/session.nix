@@ -8,14 +8,6 @@ let
   wallpaper = "${config.home.homeDirectory}/Pictures/wallpaper";
 in
 {
-  imports = [
-    ./apps.nix
-    ./mango.nix
-    ./shell.nix
-    ./theming.nix
-    ./waybar.nix
-  ];
-
   home.stateVersion = "26.05";
 
   home.sessionVariables = {

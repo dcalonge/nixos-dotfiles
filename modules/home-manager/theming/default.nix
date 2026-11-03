@@ -70,7 +70,6 @@ let
       output = "${cfgHome}/gtklock/style.css";
       default = "gtklock.css";
     };
-    # Firefox themed through the Pywalfox extension (reads the pywal colors.json)
     pywalfox = {
       input = "pywalfox-colors.json";
       output = "${config.xdg.cacheHome}/wal/colors.json";

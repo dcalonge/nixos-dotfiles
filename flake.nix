@@ -53,8 +53,8 @@
           };
           modules = [
             { nixpkgs.overlays = [ (import ./pkgs { inherit vars; }) ]; }
-            ./configuration.nix
-            ./hosts/${host}
+            ./modules/nixos
+            ./hosts/${host}/configuration.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -66,7 +66,7 @@
                   vars = hostVars;
                 };
                 users.${vars.user}.imports = [
-                  ./home
+                  ./modules/home-manager
                   ./hosts/${host}/home.nix
                 ];
               };
