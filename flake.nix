@@ -18,10 +18,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    helium = {
-      url = "github:schembriaiden/helium-browser-nix-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-darwin.follows = "nixpkgs";
+    betterfox = {
+      url = "github:yokoffing/Betterfox";
+      flake = false;
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
@@ -53,7 +52,7 @@
             vars = hostVars;
           };
           modules = [
-            { nixpkgs.overlays = [ (import ./pkgs { inherit inputs vars; }) ]; }
+            { nixpkgs.overlays = [ (import ./pkgs { inherit vars; }) ]; }
             ./configuration.nix
             ./hosts/${host}
             home-manager.nixosModules.home-manager

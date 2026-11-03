@@ -1,4 +1,4 @@
-{ inputs, vars }:
+{ vars }:
 final: _prev:
 let
   scriptExcluding =
@@ -13,21 +13,6 @@ let
   script = scriptExcluding [ ];
 in
 {
-  helium = final.symlinkJoin {
-    name = "helium";
-    paths = [ inputs.helium.packages.${final.stdenv.hostPlatform.system}.default ];
-    nativeBuildInputs = [ final.makeWrapper ];
-    # Chromium only honours the last --enable-features, so the upstream
-    # WaylandWindowDecorations is repeated here.
-    postBuild = ''
-      wrapProgram $out/bin/helium \
-        --add-flags "--enable-features=AcceleratedVideoEncoder,VaapiVideoDecoder,AcceleratedVideoDecodeLinuxGL,TouchpadOverscrollHistoryNavigation,FluentOverlayScrollbar,WaylandWindowDecorations" \
-        --add-flags "--ozone-platform-hint=wayland" \
-        --add-flags "--password-store=basic"
-    '';
-    meta.mainProgram = "helium";
-  };
-
   dotfiles-scripts = with final; {
     bemoji = script "bemoji" [
       curl

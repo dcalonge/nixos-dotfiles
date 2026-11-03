@@ -130,7 +130,7 @@ in
         "SUPER+CTRL,q,spawn,${systemctl} suspend"
 
         "SUPER,Return,spawn,${foot}"
-        "SUPER,b,spawn,${lib.getExe pkgs.helium}"
+        "SUPER,b,spawn,${lib.getExe' config.programs.firefox.finalPackage "firefox"}"
         "SUPER,Space,spawn_shell,${pkill} fuzzel || ${fuzzel}"
         "SUPER,r,spawn_shell,${pkill} fuzzel || ${script "wlr-menu"}"
         "SUPER,e,spawn,${foot} -e ${lib.getExe' config.programs.yazi.package "yazi"}"

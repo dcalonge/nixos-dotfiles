@@ -10,7 +10,34 @@ in
 {
   imports = [ inputs.lazyvim.homeManagerModules.default ];
 
-  home.packages = [ pkgs.helium ];
+  programs.firefox = {
+    enable = true;
+
+    policies.ExtensionSettings =
+      let
+        amo = short: "https://addons.mozilla.org/firefox/downloads/latest/${short}/latest.xpi";
+      in
+      {
+        "uBlock0@raymondhill.net" = {
+          install_url = amo "ublock-origin";
+          installation_mode = "force_installed";
+        };
+        "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+          install_url = amo "bitwarden-password-manager";
+          installation_mode = "force_installed";
+        };
+        "sponsorBlocker@ajay.app" = {
+          install_url = amo "sponsorblock";
+          installation_mode = "force_installed";
+        };
+      };
+
+    profiles.daniel = {
+      id = 0;
+      isDefault = true;
+      extraConfig = builtins.readFile "${inputs.betterfox}/user.js";
+    };
+  };
 
   programs.foot = {
     enable = true;
