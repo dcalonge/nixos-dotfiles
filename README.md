@@ -171,7 +171,8 @@ sudo passwd daniel    # if the user didn't exist before
 | Format the repo | `nix fmt` |
 
 The waybar updates module shows when `nixos-unstable` has moved past the
-locked revision, and lists pending Flatpak updates. Old generations are
+locked revision (and, when detectable, which packages would upgrade), and lists
+pending Flatpak updates by app ID. Old generations are
 garbage-collected weekly by `programs.nh.clean`, which keeps the last 14
 days and at least 5 generations.
 

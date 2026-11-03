@@ -1,6 +1,8 @@
 lock="@flakeDir@/flake.lock"
 
-nix_pkgs=""
+entries=()
+
+# Nixpkgs input update check
 if [ -f "$lock" ]; then
   locked=$(jq -r '.nodes.nixpkgs.locked.rev // empty' "$lock")
   branch=$(jq -r '.nodes.nixpkgs.original.ref // "nixos-unstable"' "$lock")
@@ -8,25 +10,35 @@ if [ -f "$lock" ]; then
     -H 'Accept: application/vnd.github.sha' \
     "https://api.github.com/repos/NixOS/nixpkgs/commits/$branch" 2>/dev/null)
   if [ -n "$locked" ] && [ -n "$latest" ] && [ "$locked" != "$latest" ]; then
-    nix_pkgs="nixpkgs ($branch)"
+    # Try to list actual package names that would upgrade
+    nix_names=$(nix-env -u --dry-run 2>/dev/null \
+      | sed -n 's/^would upgrade \([^ ]*\).*/\1/p' \
+      | tr '\n' ' ' | sed 's/ $//')
+    if [ -n "$nix_names" ]; then
+      entries+=("nixpkgs ($branch): $nix_names")
+    else
+      entries+=("nixpkgs ($branch)")
+    fi
   fi
 fi
 
 # Flatpak updates (only if installed)
 if command -v flatpak >/dev/null 2>&1; then
-  flatpak_pkgs=$(flatpak remote-ls --updates --columns=application 2>/dev/null)
-else
-  flatpak_pkgs=""
+  while IFS= read -r app; do
+    [ -n "$app" ] && entries+=("flatpak: $app")
+  done < <(flatpak remote-ls --updates --columns=application 2>/dev/null)
 fi
 
-# Combine lists
-all_pkgs=$(printf '%s\n%s\n' "$nix_pkgs" "$flatpak_pkgs" | sed '/^$/d')
+pkg_count=${#entries[@]}
 
-# Count
-pkg_count=$(printf '%s\n' "$all_pkgs" | grep -c .)
+# Tooltip: one entry per line
+if [ "${#entries[@]}" -gt 0 ]; then
+  tooltip=$(printf '%s\n' "${entries[@]}")
+else
+  tooltip=""
+fi
 
-# Tooltip formatting
-pkg_list=$(printf '%s\n' "$all_pkgs" | sed '/^$/d; s/$/\\r/' | tr -d '\n')
+# Escape for JSON
+tooltip_json=$(printf '%s' "$tooltip" | jq -Rs .)
 
-# Output JSON
-printf '{"text":"󰏕 %s", "tooltip":"%s"}\n' "$pkg_count" "$pkg_list"
+printf '{"text":"󰏕 %s", "tooltip":%s}\n' "$pkg_count" "$tooltip_json"
