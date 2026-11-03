@@ -7,42 +7,9 @@
 
 let
   cfgHome = config.xdg.configHome;
-  lazyvim-starter = pkgs.fetchgit {
-    url = "https://github.com/LazyVim/starter";
-    ref = "master";
-  };
 in
 {
-  home.packages = with pkgs; [
-    neovim
-    lua-language-server
-    stylua
-    shfmt
-  ];
-
-  home.file.".config/nvim".source = lazyvim-starter;
-  home.file.".config/nvim/lua/config/autocmds.lua" = {
-    source = ./nvim/config/autocmds.lua;
-  };
-  home.file.".config/nvim/colors/mini-matugen.lua" = {
-    source = ./nvim/colors/mini-matugen.lua;
-  };
-  home.file.".config/nvim/lua/plugins/mini-matugen.lua".text = ''
-    return {
-      {
-        dir = "${pkgs.vimPlugins.mini-nvim}",
-        name = "mini.nvim",
-        lazy = false,
-        priority = 1000,
-      },
-      {
-        "LazyVim/LazyVim",
-        opts = {
-          colorscheme = "mini-matugen",
-        },
-      },
-    }
-  '';
+  imports = [ inputs.lazyvim.homeManagerModules.default ];
 
   programs.firefox = {
     enable = true;
@@ -164,6 +131,23 @@ in
     };
   };
 
+  programs.lazyvim = {
+    enable = true;
+    configFiles = ./nvim;
+    pluginSource = "nixpkgs";
+    # mini.nvim by store path: lazyvim-nix can't detect plugins in configFiles
+    plugins.colorscheme = ''
+      return {
+        { "LazyVim/LazyVim", opts = { colorscheme = "mini-matugen" } },
+        { dir = "${pkgs.vimPlugins.mini-nvim}", name = "mini.nvim", lazy = false, priority = 1000 },
+      }
+    '';
+    extraPackages = with pkgs; [
+      lua-language-server
+      stylua
+      shfmt
+    ];
+  };
   programs.neovim.defaultEditor = true;
 
   programs.yazi = {
