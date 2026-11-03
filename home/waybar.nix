@@ -98,7 +98,7 @@ in
         tooltip-format-disconnected = "Disconnected";
         tooltip-format-disabled = "Disabled";
         on-click-right = "${lib.getExe' pkgs.util-linux "rfkill"} toggle wifi";
-        on-click = "${pkill} fuzzel || ${lib.getExe' pkgs.iwmenu "iwmenu"} -l fuzzel";
+        on-click = "${pkill} impala || ${lib.getExe' config.programs.foot.package "foot"} -a foot-floating -e ${lib.getExe' pkgs.impala "impala"}";
         tooltip = true;
         max-length = 20;
       };
@@ -114,7 +114,7 @@ in
         tooltip-format-enumerate-connected = "{device_address}";
         tooltip-format-enumerate-connected-battery = "{device_alias} | Battery: {device_battery_percentage}%";
         on-click-right = "${bluetoothctl} show | ${lib.getExe' pkgs.gnugrep "grep"} -q 'Powered: yes' && ${bluetoothctl} power off || ${bluetoothctl} power on";
-        on-click = "${pkill} fuzzel || ${lib.getExe' pkgs.bzmenu "bzmenu"} -l fuzzel";
+        on-click = "${pkill} bluetui || ${lib.getExe' config.programs.foot.package "foot"} -a foot-floating -e ${lib.getExe' pkgs.bluetui "bluetui"}";
       };
 
       wireplumber = {

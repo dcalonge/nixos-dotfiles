@@ -41,9 +41,8 @@ in
       libnotify
       xdg-utils
       pulsemixer
-      iwmenu
-      bzmenu
-      bluetuith
+      impala
+      bluetui
       qalculate-gtk
     ]);
 
