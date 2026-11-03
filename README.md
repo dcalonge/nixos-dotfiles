@@ -57,7 +57,10 @@ and checks formatting.
   `user.js` is read from the non-flake `betterfox` input, so it updates with
   the rest of the flake. uBlock Origin, Bitwarden and SponsorBlock are
   installed through Home Manager's Firefox policy
-  (`policies.ExtensionSettings`) from addons.mozilla.org.
+  (`policies.ExtensionSettings`) from addons.mozilla.org, unpinned from the
+  toolbar. Vertical tabs are enabled (`sidebar.revamp`, `sidebar.verticalTabs`),
+  the bookmarks bar is hidden, density is compact, sessions restore on startup,
+  and DuckDuckGo is the default search engine.
   Mango is `pkgs.mango`. The `mango` flake input is only used for its Home
   Manager module, which writes `~/.config/mango/config.conf` and checks it
   with `mango -p` at build time, so an invalid key or a value over 255 bytes
@@ -181,15 +184,7 @@ days and at least 5 generations.
 - **Change app settings:** edit the Nix module, not the file in `~/.config`,
   which is read-only. This also applies to btop's options menu and to GTK
   settings.
-- **Neovim:** LazyVim comes from
-  [lazyvim-nix](https://github.com/pfassina/lazyvim-nix). Plugins and
-  treesitter parsers come from Nix (nixpkgs builds where possible), and
-  Mason isn't used. Lua config goes in `home/nvim/config/` and colorschemes
-  in `home/nvim/colors/`. Add extra plugins in `programs.lazyvim.plugins`
-  in `home/apps.nix` with `dir = "${pkgs.vimPlugins.<name>}"` (see the
-  colorscheme entry), so they come from nixpkgs instead of being downloaded
-  by lazy.nvim. Language servers and formatters go in
-  `programs.lazyvim.extraPackages`.
+- **Neovim:** LazyVim comes from cloning the [LazyVim starter](https://github.com/LazyVim/starter) repo directly (no lazyvim-nix). Plugins and treesitter parsers come from Nix (nixpkgs builds where possible), and Mason isn't used. Lua config goes in `home/nvim/config/` and colorschemes in `home/nvim/colors/`. Extra plugins are added in `home/apps.nix`. Language servers and formatters go in `home.packages`.
 - **Add a script:** create `pkgs/scripts/<name>.sh` (no shebang) and
   register it in `pkgs/default.nix` with the packages it needs. It's then
   available as `<name>` and as `pkgs.dotfiles-scripts.<name>`.
