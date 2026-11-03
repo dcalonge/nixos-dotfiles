@@ -34,7 +34,6 @@ in
         "privacy"
       ];
       modules-right = [
-        "keyboard-state"
         "group/tray-expander"
         "wireplumber"
         "backlight"
@@ -224,15 +223,6 @@ in
         format = "";
         tooltip = false;
       };
-
-      keyboard-state = {
-        capslock = true;
-        format.capslock = "{icon}";
-        format-icons = {
-          locked = "Caps ";
-          unlocked = "";
-        };
-      };
     };
 
     style = ''
@@ -262,7 +252,6 @@ in
       #battery,
       #custom-expand-icon,
       #group-tray-expander,
-      #keyboard-state,
       #workspaces button {
         color: @on-surface;
       }
@@ -303,7 +292,6 @@ in
       #custom-expand-icon,
       #group-tray-expander,
       #custom-expand-icon,
-      #keyboard-state,
       #battery {
         min-width: 12px;
         margin: 0 6px;

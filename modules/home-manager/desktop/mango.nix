@@ -69,7 +69,7 @@ in
 
       repeat_rate = 25;
       repeat_delay = 600;
-      xkb_rules_layout = "es";
+      xkb_rules_layout = "es,us";
 
       disable_trackpad = 0;
       tap_to_click = 1;
@@ -105,6 +105,7 @@ in
         "SUPER+SHIFT,Return,zoom"
         "SUPER,Tab,view,-1"
         "SUPER+SHIFT,r,reload_config"
+        "SUPER+CTRL,space,spawn,${script "kb-layout"}"
 
         "SUPER,t,setlayout,tile"
         "SUPER,m,setlayout,monocle"

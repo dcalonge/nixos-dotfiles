@@ -50,6 +50,8 @@
         "browser.toolbars.bookmarks.visibility" = "never";
         "browser.tabs.drawInTitlebar" = true;
         "widget.gtk.native-context-menus" = true;
+        "media.videocontrols.picture-in-picture.enabled" = false;
+        "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
       };
 
       search = {

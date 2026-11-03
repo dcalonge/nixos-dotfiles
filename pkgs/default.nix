@@ -71,6 +71,12 @@ in
       libnotify
       coreutils
     ];
+    kb-layout = script "kb-layout" [
+      mango
+      jq
+      libnotify
+      coreutils
+    ];
     mute-mic = script "mute-mic" [
       wireplumber
       libnotify
