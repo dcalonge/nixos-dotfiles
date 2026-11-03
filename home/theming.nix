@@ -70,6 +70,13 @@ let
       output = "${cfgHome}/gtklock/style.css";
       default = "gtklock.css";
     };
+    # Firefox themed through the Pywalfox extension (reads the pywal colors.json)
+    pywalfox = {
+      input = "pywalfox-colors.json";
+      output = "${config.xdg.cacheHome}/wal/colors.json";
+      hook = "pywalfox update || true";
+      default = "pywalfox-colors.json";
+    };
     mango = {
       input = "mango.conf";
       output = "${cfgHome}/mango/colors.conf";
@@ -91,7 +98,10 @@ let
   };
 in
 {
-  home.packages = [ pkgs.matugen ];
+  home.packages = [
+    pkgs.matugen
+    pkgs.pywalfox-native
+  ];
 
   xdg.configFile."matugen/config.toml".source = matugenConfig;
 
