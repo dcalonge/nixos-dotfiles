@@ -56,6 +56,7 @@ in
         "browser.uidensity" = 1;
         "browser.toolbars.bookmarks.visibility" = "never";
         "browser.tabs.drawInTitlebar" = true;
+        "widget.gtk.native-context-menus" = true;
       };
 
       search = {
