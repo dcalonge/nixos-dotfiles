@@ -136,7 +136,6 @@
   };
 
   programs.bat.enable = true;
-  programs.fastfetch.enable = true;
   programs.gh.enable = true;
   programs.lazygit.enable = true;
   programs.fd.enable = true;
