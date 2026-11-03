@@ -28,7 +28,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
       ...
@@ -80,8 +79,6 @@
         "laptop-intel"
       ] mkHost;
 
-      formatter = nixpkgs.lib.mapAttrs' (
-        _: host: nixpkgs.lib.nameValuePair host.pkgs.stdenv.hostPlatform.system host.pkgs.nixfmt
-      ) self.nixosConfigurations;
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
 }
