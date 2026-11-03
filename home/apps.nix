@@ -7,7 +7,7 @@
 
 let
   cfgHome = config.xdg.configHome;
-  lazyvim-starter = pkgs.fetchGit {
+  lazyvim-starter = pkgs.fetchgit {
     url = "https://github.com/LazyVim/starter";
     ref = "master";
   };
