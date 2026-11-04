@@ -1,7 +1,7 @@
 name: update
 
-# Updates flake.lock, checks it the same way as CI, and pushes it to main.
-# The laptops then pull and switch instead of updating themselves.
+# Updates flake.lock, evaluates both hosts with it (same as CI) and pushes it to
+# main. The laptops then pull and switch instead of updating themselves.
 on:
   schedule:
     - cron: "0 4 * * 1" # Mondays 04:00 UTC
@@ -27,7 +27,7 @@ jobs:
       - uses: cachix/install-nix-action@v31
       - name: Update inputs
         run: nix flake update --commit-lock-file
-      - name: Evaluate hosts and build Home Manager
-        run: nix flake check --show-trace
+      - name: Evaluate both hosts
+        run: nix flake check --no-build --show-trace
       - name: Push
         run: git push
