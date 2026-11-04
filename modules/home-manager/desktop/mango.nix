@@ -135,7 +135,7 @@ in
         "SUPER,Space,spawn_shell,${pkill} fuzzel || ${fuzzel}"
         "SUPER,r,spawn_shell,${pkill} fuzzel || ${script "wlr-menu"}"
         "SUPER,e,spawn,${foot} -e ${lib.getExe' config.programs.yazi.package "yazi"}"
-        "SUPER,n,spawn,${foot} -T neovim -e ${lib.getExe' config.programs.neovim.finalPackage "nvim"}"
+        "SUPER,n,spawn,${foot} -T neovim -e nvim"
         "SUPER,p,spawn,${foot} -a foot-floating -e ${lib.getExe' pkgs.pulsemixer "pulsemixer"}"
         "SUPER,c,spawn,${qalculate}"
         "SUPER,h,spawn,${foot} -T btop -e ${lib.getExe' config.programs.btop.package "btop"}"

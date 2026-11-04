@@ -2,7 +2,7 @@
 
 NixOS configuration for my two laptops (one AMD, one Intel): a flake that
 builds the whole system and, through Home Manager, the user environment
-(Mango WM, Waybar, foot, fish, LazyVim, …). Migrated from my [Arch dotfiles](https://github.com/dcalonge/dotfiles).
+(Mango WM, Waybar, foot, fish, Neovim, …). Migrated from my [Arch dotfiles](https://github.com/dcalonge/dotfiles).
 
 ## Structure
 
@@ -31,7 +31,7 @@ modules/
     media.nix                zathura, mpv, imv
     desktop/                 mango (compositor, keybindings), waybar, fuzzel, mako
     terminal/                foot, fish (shell.nix), yazi, btop
-    neovim/                  LazyVim via lazyvim-nix; files/ holds the Lua config and colorschemes
+    neovim/                  Nixvim config modelled on LazyVim; files/ holds the matugen colorscheme
     opencode/                opencode settings and AGENTS.md
     theming/                 GTK, Qt, cursor and the matugen setup
       matugen/templates/     matugen templates, one per themed app
@@ -196,16 +196,15 @@ days and at least 5 generations.
 - **Change app settings:** edit the Nix module, not the file in `~/.config`,
   which is read-only. This also applies to btop's options menu and to GTK
   settings.
-- **Neovim:** LazyVim comes from
-  [lazyvim-nix](https://github.com/pfassina/lazyvim-nix). Plugins and
-  treesitter parsers come from Nix (nixpkgs builds where possible), and
-  Mason isn't used. Lua config goes in `modules/home-manager/neovim/files/config/` and
-  colorschemes in `modules/home-manager/neovim/files/colors/`. Add extra
-  plugins in `programs.lazyvim.plugins` in
-  `modules/home-manager/neovim/default.nix` with `dir = "${pkgs.vimPlugins.<name>}"` (see the
-  colorscheme entry), so they come from nixpkgs instead of being downloaded
-  by lazy.nvim. Language servers and formatters go in
-  `programs.lazyvim.extraPackages`.
+- **Neovim:** a [Nixvim](https://github.com/nix-community/nixvim) setup that
+  mirrors LazyVim: the same options, keymaps and plugin set (snacks, which-key,
+  lualine, bufferline, blink.cmp, conform, flash, trouble, noice, …), but every
+  plugin and treesitter parser comes from Nix and there's no lazy.nvim or Mason.
+  Settings are split by area in `modules/home-manager/neovim/` (`options.nix`,
+  `keymaps.nix`, `ui.nix`, `editor.nix`, `coding.nix`). Enable another plugin
+  with `programs.nixvim.plugins.<name>.enable`, add language servers under
+  `programs.nixvim.lsp.servers`, and put formatters in `extraPackages`. The
+  matugen colorscheme lives in `neovim/files/colors/`.
 - **Add a script:** create `pkgs/scripts/<name>.sh` (no shebang) and
   register it in `pkgs/default.nix` with the packages it needs. It's then
   available as `<name>` and as `pkgs.dotfiles-scripts.<name>`.

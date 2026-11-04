@@ -1,23 +1,28 @@
 { inputs, pkgs, ... }:
 {
-  imports = [ inputs.lazyvim.homeManagerModules.default ];
+  imports = [
+    inputs.nixvim.homeModules.nixvim
+    ./coding.nix
+    ./editor.nix
+    ./keymaps.nix
+    ./options.nix
+    ./ui.nix
+  ];
 
-  programs.lazyvim = {
+  programs.nixvim = {
     enable = true;
-    configFiles = ./files;
-    pluginSource = "nixpkgs";
-    # mini.nvim by store path: lazyvim-nix can't detect plugins in configFiles
-    plugins.colorscheme = ''
-      return {
-        { "LazyVim/LazyVim", opts = { colorscheme = "mini-matugen" } },
-        { dir = "${pkgs.vimPlugins.mini-nvim}", name = "mini.nvim", lazy = false, priority = 1000 },
-      }
-    '';
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+
+    colorscheme = "mini-matugen";
+    extraFiles."colors/mini-matugen.lua".source = ./files/colors/mini-matugen.lua;
+    extraConfigLua = builtins.readFile ./files/config/autocmds.lua;
+
     extraPackages = with pkgs; [
-      lua-language-server
-      stylua
-      shfmt
+      fd
+      lazygit
+      ripgrep
     ];
   };
-  programs.neovim.defaultEditor = true;
 }
