@@ -64,9 +64,7 @@
         enable = true;
         settings = {
           keymap.preset = "enter";
-          appearance.nerd_font_variant = "mono";
           completion = {
-            accept.auto_brackets.enabled = true;
             menu.draw.treesitter = [ "lsp" ];
             documentation = {
               auto_show = true;
@@ -74,12 +72,6 @@
             };
           };
           sources = {
-            default = [
-              "lsp"
-              "path"
-              "snippets"
-              "buffer"
-            ];
             per_filetype.lua = [
               "lazydev"
               "lsp"
@@ -176,11 +168,6 @@
           key = "gD";
           lspBufAction = "declaration";
           options.desc = "Goto Declaration";
-        }
-        {
-          key = "K";
-          lspBufAction = "hover";
-          options.desc = "Hover";
         }
         {
           key = "gK";

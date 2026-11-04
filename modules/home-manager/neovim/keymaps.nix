@@ -39,8 +39,6 @@ in
 
     (n "<S-h>" "<cmd>bprevious<cr>" "Prev Buffer")
     (n "<S-l>" "<cmd>bnext<cr>" "Next Buffer")
-    (n "[b" "<cmd>bprevious<cr>" "Prev Buffer")
-    (n "]b" "<cmd>bnext<cr>" "Next Buffer")
     (n "<leader>bb" "<cmd>e #<cr>" "Switch to Other Buffer")
     (n "<leader>`" "<cmd>e #<cr>" "Switch to Other Buffer")
     (n "<leader>bd" (snacks "bufdelete()") "Delete Buffer")
@@ -71,8 +69,6 @@ in
     (n "<leader>fn" "<cmd>enew<cr>" "New File")
     (n "<leader>xl" "<cmd>lopen<cr>" "Location List")
     (n "<leader>xq" "<cmd>copen<cr>" "Quickfix List")
-    (n "[q" "<cmd>cprev<cr>" "Previous Quickfix")
-    (n "]q" "<cmd>cnext<cr>" "Next Quickfix")
 
     (n "<leader>cd" (lua "vim.diagnostic.open_float()") "Line Diagnostics")
     (n "]d" (lua "vim.diagnostic.jump({ count = 1, float = true })") "Next Diagnostic")

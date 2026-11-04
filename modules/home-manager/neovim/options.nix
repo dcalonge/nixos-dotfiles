@@ -1,9 +1,6 @@
 {
   programs.nixvim = {
-    globals = {
-      mapleader = " ";
-      maplocalleader = "\\";
-    };
+    globals.mapleader = " ";
 
     opts = {
       autowrite = true;
@@ -19,7 +16,6 @@
       grepformat = "%f:%l:%c:%m";
       grepprg = "rg --vimgrep";
       ignorecase = true;
-      inccommand = "nosplit";
       jumpoptions = "view";
       laststatus = 3;
       linebreak = true;
@@ -40,12 +36,10 @@
       smartcase = true;
       smartindent = true;
       smoothscroll = true;
-      spelllang = "en";
       splitbelow = true;
       splitkeep = "screen";
       splitright = true;
       tabstop = 2;
-      termguicolors = true;
       timeoutlen = 300;
       undofile = true;
       undolevels = 10000;
@@ -57,8 +51,6 @@
     };
 
     diagnostic.settings = {
-      underline = true;
-      update_in_insert = false;
       severity_sort = true;
       virtual_text = {
         spacing = 4;

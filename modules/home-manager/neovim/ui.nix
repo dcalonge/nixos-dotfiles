@@ -109,7 +109,6 @@
       enable = true;
       settings = {
         options = {
-          theme = "auto";
           globalstatus = true;
           disabled_filetypes.statusline = [
             "dashboard"
@@ -119,7 +118,6 @@
           ];
         };
         sections = {
-          lualine_a = [ "mode" ];
           lualine_b = [ "branch" ];
           lualine_c = [
             "diagnostics"
@@ -138,8 +136,6 @@
             }
           ];
           lualine_x = [ "diff" ];
-          lualine_y = [ "progress" ];
-          lualine_z = [ "location" ];
         };
       };
     };
