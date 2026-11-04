@@ -233,10 +233,11 @@ sudo passwd daniel    # if the user didn't exist before
 
 | Task | Command |
 | --- | --- |
-| Apply config changes | `nh os switch` (`pb`) |
-| Update all inputs and switch | `nh os switch --update` (`pu`), or `SUPER+u` (also updates Flatpaks) |
-| Search packages | `nh search <name>` (`ps`) |
-| Try a package without installing it | `nix shell nixpkgs#<name>` (`pi`) |
+| Apply config changes | `nh os switch` (`nos`) |
+| Update all inputs and switch | `nh os switch --update` (`nosu`), or `SUPER+u` (also updates Flatpaks) |
+| Search packages | `nh search <name>` (`nhs`) |
+| Try a package without installing it | `nix shell nixpkgs#<name>` (`ns`) |
+| Run a package once without installing it | `nix run nixpkgs#<name>` (`nr`) |
 | Format the repo | `nix fmt` |
 
 The waybar updates module shows pending `nixos-unstable` and Flatpak updates.

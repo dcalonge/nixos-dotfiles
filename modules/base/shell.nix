@@ -62,11 +62,15 @@
           fr = "flatpak uninstall";
           fs = "flatpak search";
 
-          pu = "nh os switch --update";
-          pb = "nh os switch";
-          ps = "nh search";
-          pi = {
+          nos = "nh os switch";
+          nosu = "nh os switch --update";
+          nhs = "nh search";
+          ns = {
             expansion = "nix shell nixpkgs#%";
+            setCursor = true;
+          };
+          nr = {
+            expansion = "nix run nixpkgs#%";
             setCursor = true;
           };
 
