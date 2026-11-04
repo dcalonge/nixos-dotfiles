@@ -36,6 +36,12 @@
   security.doas = {
     enable = true;
     wheelNeedsPassword = true;
+    extraRules = [
+      {
+        groups = [ "wheel" ];
+        persist = true;
+      }
+    ];
   };
   security.sudo.enable = false;
 
