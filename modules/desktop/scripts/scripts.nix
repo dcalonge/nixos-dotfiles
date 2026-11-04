@@ -95,13 +95,12 @@ let
         updater = scriptExcluding [ "SC2059" "SC2016" ] "updater" [
           fuzzel
           foot
+          git
           nh
         ];
         waybar-updates = script "waybar-updates" [
-          curl
+          git
           jq
-          gnused
-          gnugrep
           coreutils
         ];
         waybar-weather = scriptExcluding [ "SC2086" ] "waybar-weather" [

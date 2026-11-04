@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  inherit (config) flakeDir;
+in
 {
   flake.modules.nixos.base =
     { pkgs, ... }:
@@ -63,7 +67,8 @@
           fs = "flatpak search";
 
           nos = "nh os switch";
-          nosu = "nh os switch --update";
+          # Inputs are updated by the weekly GitHub workflow; this pulls its lock
+          nosu = "git -C ${flakeDir} pull --ff-only && nh os switch";
           nhs = "nh search";
           ns = {
             expansion = "nix shell nixpkgs#%";

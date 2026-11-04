@@ -1,24 +1,21 @@
-lock="@flakeDir@/flake.lock"
+dir="@flakeDir@"
 
 entries=()
 
-# Nixpkgs input update check
-if [ -f "$lock" ]; then
-  locked=$(jq -r '.nodes.nixpkgs.locked.rev // empty' "$lock")
-  branch=$(jq -r '.nodes.nixpkgs.original.ref // "nixos-unstable"' "$lock")
-  latest=$(curl -fsS --max-time 10 \
-    -H 'Accept: application/vnd.github.sha' \
-    "https://api.github.com/repos/NixOS/nixpkgs/commits/$branch" 2>/dev/null)
-  if [ -n "$locked" ] && [ -n "$latest" ] && [ "$locked" != "$latest" ]; then
-    # Try to list actual package names that would upgrade
-    nix_names=$(nix-env -u --dry-run 2>/dev/null \
-      | sed -n 's/^would upgrade \([^ ]*\).*/\1/p' \
-      | tr '\n' ' ' | sed 's/ $//')
-    if [ -n "$nix_names" ]; then
-      entries+=("nixpkgs ($branch): $nix_names")
-    else
-      entries+=("nixpkgs ($branch)")
-    fi
+# Flake inputs updated on GitHub (by the weekly workflow) but not pulled yet
+export GIT_TERMINAL_PROMPT=0 GIT_SSH_COMMAND="ssh -o BatchMode=yes"
+if timeout 30 git -C "$dir" fetch --quiet 2>/dev/null; then
+  remote_lock=$(git -C "$dir" show '@{upstream}:flake.lock' 2>/dev/null)
+  if [ -n "$remote_lock" ]; then
+    while IFS= read -r input; do
+      [ -n "$input" ] && entries+=("flake input: $input")
+    done < <(jq -rn --slurpfile here "$dir/flake.lock" --argjson there "$remote_lock" '
+      def hash($lock; $name):
+        ($lock.nodes[($lock.nodes.root.inputs[$name] // "")] // {}).locked.narHash;
+      $here[0] as $h
+      | $there.nodes.root.inputs | keys[]
+      | select(hash($h; .) != hash($there; .))
+    ' 2>/dev/null)
   fi
 fi
 
