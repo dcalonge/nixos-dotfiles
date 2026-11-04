@@ -14,7 +14,7 @@ let
   expr = keymap: keymap // { options = keymap.options // { expr = true; }; };
 in
 {
-  programs.nixvim.keymaps = [
+  keymaps = [
     (expr (map [ "n" "x" ] "j" "v:count == 0 ? 'gj' : 'j'" "Down"))
     (expr (map [ "n" "x" ] "<Down>" "v:count == 0 ? 'gj' : 'j'" "Down"))
     (expr (map [ "n" "x" ] "k" "v:count == 0 ? 'gk' : 'k'" "Up"))
