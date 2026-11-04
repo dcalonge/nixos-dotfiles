@@ -1,4 +1,9 @@
-{ inputs, pkgs, ... }:
+{
+  inputs,
+  importDir,
+  pkgs,
+  ...
+}:
 {
   imports = [ inputs.nixvim.homeModules.nixvim ];
 
@@ -8,13 +13,7 @@
     viAlias = true;
     vimAlias = true;
 
-    imports = [
-      ./coding.nix
-      ./editor.nix
-      ./keymaps.nix
-      ./options.nix
-      ./ui.nix
-    ];
+    imports = importDir ./.;
 
     colorscheme = "mini-matugen";
     extraFiles."colors/mini-matugen.lua".source = ./files/colors/mini-matugen.lua;

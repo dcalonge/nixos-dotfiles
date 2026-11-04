@@ -1,7 +1,4 @@
+{ importDir, ... }:
 {
-  imports = [
-    ./foot.nix
-    ./shell.nix
-    ./tools.nix
-  ];
+  imports = importDir ./.;
 }

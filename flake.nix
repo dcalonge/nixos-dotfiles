@@ -32,10 +32,31 @@
       ...
     }@inputs:
     let
+      inherit (nixpkgs) lib;
+
       vars = rec {
         user = "daniel";
         flakeDir = "/home/${user}/nixos-dotfiles";
       };
+
+      importDir =
+        dir:
+        let
+          isModule =
+            name: type:
+            name != "default.nix"
+            && (
+              (type == "regular" && lib.hasSuffix ".nix" name)
+              || (type == "directory" && builtins.pathExists (dir + "/${name}/default.nix"))
+            );
+        in
+        lib.mapAttrsToList (name: _: dir + "/${name}") (
+          lib.filterAttrs isModule (builtins.readDir dir)
+        );
+
+      hosts = lib.attrNames (
+        lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./hosts)
+      );
 
       mkHost =
         host:
@@ -44,9 +65,9 @@
             inherit host;
           };
         in
-        nixpkgs.lib.nixosSystem {
+        lib.nixosSystem {
           specialArgs = {
-            inherit inputs;
+            inherit inputs importDir;
             vars = hostVars;
           };
           modules = [
@@ -60,7 +81,7 @@
                 useUserPackages = true;
                 backupFileExtension = "hm-backup";
                 extraSpecialArgs = {
-                  inherit inputs;
+                  inherit inputs importDir;
                   vars = hostVars;
                 };
                 users.${vars.user}.imports = [
@@ -73,10 +94,7 @@
         };
     in
     {
-      nixosConfigurations = nixpkgs.lib.genAttrs [
-        "laptop-amd"
-        "laptop-intel"
-      ] mkHost;
+      nixosConfigurations = lib.genAttrs hosts mkHost;
 
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     };
