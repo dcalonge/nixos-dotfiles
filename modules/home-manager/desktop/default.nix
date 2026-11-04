@@ -1,4 +1,0 @@
-{ importDir, ... }:
-{
-  imports = importDir ./.;
-}
