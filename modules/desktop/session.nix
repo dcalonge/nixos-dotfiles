@@ -1,6 +1,19 @@
+{ config, ... }:
+let
+  inherit (config) username;
+in
 {
   flake.modules.nixos.desktop = {
     security.polkit.enable = true;
+
+    # tty1 asks only for the password; the login shell then starts Mango
+    services.getty = {
+      loginOptions = "-- ${username}";
+      extraArgs = [
+        "--skip-login"
+        "--noreset"
+      ];
+    };
   };
 
   flake.modules.homeManager.desktop =

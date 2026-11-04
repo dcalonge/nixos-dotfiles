@@ -1,7 +1,10 @@
 {
-  flake.modules.nixos.base = {
-    programs.fish.enable = true;
-  };
+  flake.modules.nixos.base =
+    { pkgs, ... }:
+    {
+      programs.fish.enable = true;
+      environment.binsh = "${pkgs.dash}/bin/dash";
+    };
 
   flake.modules.homeManager.base =
     { pkgs, ... }:
