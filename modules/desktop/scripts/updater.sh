@@ -4,9 +4,16 @@ SELECTION=$(printf "$OPTIONS" | fuzzel --dmenu)
 case "$SELECTION" in
 "update")
   foot -a foot-floating -e bash -c '
-    git -C "$1" pull --ff-only &&
-      nh os switch "$1" &&
-      flatpak update -y
+    dir=$1
+    # Only rebuild when GitHub has commits this checkout does not have yet
+    if git -C "$dir" fetch --quiet &&
+      [ "$(git -C "$dir" rev-list --count "HEAD..@{upstream}")" -gt 0 ]; then
+      git -C "$dir" pull --ff-only && nh os switch "$dir"
+    else
+      echo "Nothing new on GitHub, skipping the rebuild."
+    fi
+    echo ""
+    flatpak update -y
     echo ""
     read -r -p "Press return to close"
   ' _ "@flakeDir@"

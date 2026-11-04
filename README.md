@@ -73,20 +73,21 @@ folder of the module it belongs to:
 }
 ```
 
-On every push, GitHub Actions runs `nix flake check --no-build` (evaluates both
-hosts) and checks formatting. Nothing is built in CI, so build failures show up
-when a laptop runs `nh os switch`, which stops before switching.
+On every push, GitHub Actions runs `nix flake check` and checks formatting.
+`nix flake check` evaluates both hosts and builds each one's Home Manager
+generation (`modules/checks.nix`): the parts built from this config, such as
+Mango's config check, the scripts and Nixvim. The rest of the system comes from
+the binary cache and isn't built, so a failure there would only show up on a
+laptop.
 
 ### Updates
 
 The `update` workflow runs every Monday (or by hand from the Actions tab, or
-`gh workflow run update`): it runs `nix flake update`, evaluates both hosts the
-same way, and pushes the new `flake.lock` to `main` only if that passes. The
-laptops never update inputs themselves; they pull that lock and switch (`nosu`
-or `SUPER+u`), so both run the same revisions. If an update doesn't build, the
-switch fails and the laptop keeps running its current system; revert the lock
-commit or wait for a fixed one. Pull before pushing your own changes, since the
-workflow commits to `main` too.
+`gh workflow run update`): it runs `nix flake update`, the same
+`nix flake check`, and pushes the new `flake.lock` to `main` only if the check
+passes. The laptops never update inputs themselves; they pull that lock and
+switch (`nosu` or `SUPER+u`), so both run the same revisions. Pull before
+pushing your own changes, since the workflow commits to `main` too.
 
 ### Choosing modules per host
 
@@ -246,7 +247,7 @@ sudo passwd daniel    # if the user didn't exist before
 | Task | Command |
 | --- | --- |
 | Apply config changes | `nh os switch` (`nos`) |
-| Pull the latest `flake.lock` and switch | `git pull --ff-only && nh os switch` (`nosu`), or `SUPER+u` (also updates Flatpaks) |
+| Pull the latest `flake.lock` and switch | `git pull --ff-only && nh os switch` (`nosu`), or `SUPER+u` (rebuilds only if GitHub has new commits, then updates Flatpaks) |
 | Search packages | `nh search <name>` (`nhs`) |
 | Try a package without installing it | `nix shell nixpkgs#<name>` (`ns`) |
 | Run a package once without installing it | `nix run nixpkgs#<name>` (`nr`) |

@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
-      - name: Evaluate both hosts
-        run: nix flake check --no-build --show-trace
+      - name: Evaluate hosts and build Home Manager
+        run: nix flake check --show-trace
       - name: Formatting
         run: git ls-files -z '*.nix' | xargs -0 nix fmt -- --check
