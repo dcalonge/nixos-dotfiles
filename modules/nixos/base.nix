@@ -33,7 +33,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "es";
 
-  # doas replaces sudo; members of wheel get full root access.
   security.doas = {
     enable = true;
     wheelNeedsPassword = true;
