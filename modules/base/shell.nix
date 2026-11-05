@@ -67,8 +67,9 @@ in
           fs = "flatpak search";
 
           nos = "nh os switch";
-          # Inputs are updated by the weekly GitHub workflow; this pulls its lock
-          nosu = "git -C ${flakeDir} pull --ff-only && nh os switch";
+          # Inputs are updated by the weekly GitHub workflow; this pulls its
+          # lock after dropping any local flake.lock edits.
+          nosu = "git -C ${flakeDir} restore --source=HEAD --staged --worktree -- flake.lock; git -C ${flakeDir} pull --ff-only && nh os switch";
           nhs = "nh search";
           ns = {
             expansion = "nix shell nixpkgs#%";
