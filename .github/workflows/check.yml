@@ -7,10 +7,16 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v7
+
       - uses: cachix/install-nix-action@v31
-      - name: Evaluate hosts and build Home Manager
-        run: nix flake check --show-trace
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Evaluate hosts and build both laptops
+        run: nix flake check --show-trace --print-build-logs
+
       - name: Formatting
         run: git ls-files -z '*.nix' | xargs -0 nix fmt -- --check

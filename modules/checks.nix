@@ -1,18 +1,17 @@
 { config, lib, ... }:
 let
-  inherit (config) username;
   hosts = config.flake.nixosConfigurations;
 in
 {
-  # `nix flake check` evaluates every host and builds these: each host's Home
-  # Manager generation, i.e. the parts built locally from this config (Mango's
-  # config check, scripts, Nixvim, generated files), without the whole system.
+  # `nix flake check` builds each host in full: the whole NixOS system
+  # (`system.build.toplevel`), including its Home Manager generation, scripts,
+  # Mango's config check and Nixvim. A failing system therefore fails CI instead
+  # of only showing up on the laptop.
   perSystem =
     { system, ... }:
     {
       checks = lib.mapAttrs' (
-        name: host:
-        lib.nameValuePair "home-${name}" host.config.home-manager.users.${username}.home.activationPackage
+        name: host: lib.nameValuePair "host-${name}" host.config.system.build.toplevel
       ) (lib.filterAttrs (_: host: host.pkgs.stdenv.hostPlatform.system == system) hosts);
     };
 }
