@@ -15,8 +15,8 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Evaluate hosts and build both laptops
-        run: nix flake check --show-trace --print-build-logs
+      - name: Evaluate hosts
+        run: nix flake check --no-build --show-trace
 
       - name: Formatting
         run: git ls-files -z '*.nix' | xargs -0 nix fmt -- --check

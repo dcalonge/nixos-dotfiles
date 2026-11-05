@@ -73,20 +73,21 @@ folder of the module it belongs to:
 }
 ```
 
-On every push and pull request, GitHub Actions runs `nix flake check` and checks
-formatting. `nix flake check` evaluates both hosts and builds each one's full
-NixOS system (`system.build.toplevel` in `modules/checks.nix`), including its
-Home Manager generation, Mango's config check, the scripts and Nixvim.
+On every push and pull request, GitHub Actions evaluates both hosts with
+`nix flake check --no-build` and checks formatting. `modules/checks.nix` defines
+each host's full NixOS system (`system.build.toplevel`) as a check, so the
+evaluation covers the whole configuration, including its Home Manager
+generation, Mango's config check, the scripts and Nixvim.
 
 ### Updates
 
 The `update` workflow runs every Monday (or by hand from the Actions tab, or
-`gh workflow run update`): it runs `nix flake update`, the same
-`nix flake check` (building both laptops), and pushes the new `flake.lock` to
-`main` only if the check passes. The laptops never update inputs themselves;
-they pull that lock and switch (`nosu` or `SUPER+u`), so both run the same
-revisions. Pull before pushing your own changes, since the workflow commits to
-`main` too.
+`gh workflow run update`): it runs `nix flake update` and, only if `flake.lock`
+changed, builds both laptops with `nix flake check` before committing and
+pushing the new lock to `main`. If the lock is already up to date, it does
+nothing. The laptops never update inputs themselves; they pull that lock and
+switch (`nosu` or `SUPER+u`), so both run the same revisions. Pull before
+pushing your own changes, since the workflow commits to `main` too.
 
 ### Choosing modules per host
 

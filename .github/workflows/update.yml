@@ -1,7 +1,7 @@
 name: update
 
-# Updates flake.lock, checks it the same way as CI, and pushes it to main.
-# The laptops then pull and switch instead of updating themselves.
+# Updates flake.lock, builds both laptops when the lock changes, and pushes it
+# to main. The laptops then pull and switch instead of updating themselves.
 on:
   schedule:
     - cron: "0 4 * * 1" # Mondays 04:00 UTC
@@ -28,8 +28,22 @@ jobs:
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Update inputs
-        run: nix flake update --commit-lock-file
-      - name: Evaluate hosts and build both laptops
+        id: update
+        run: |
+          nix flake update
+          if git diff --quiet -- flake.lock; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Build both laptops
+        if: steps.update.outputs.changed == 'true'
         run: nix flake check --show-trace --print-build-logs
+      - name: Commit lock file
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          git add flake.lock
+          git commit -m "flake.lock: Update"
       - name: Push
+        if: steps.update.outputs.changed == 'true'
         run: git push
