@@ -73,11 +73,11 @@ folder of the module it belongs to:
 }
 ```
 
-On every push and pull request, GitHub Actions evaluates both hosts with
-`nix flake check --no-build` and checks formatting. `modules/checks.nix` defines
-each host's full NixOS system (`system.build.toplevel`) as a check, so the
-evaluation covers the whole configuration, including its Home Manager
-generation, Mango's config check, the scripts and Nixvim.
+On every push and pull request, GitHub Actions runs `nix flake check`, which
+evaluates both hosts and builds each one's full NixOS system
+(`system.build.toplevel` in `modules/checks.nix`), including its Home Manager
+generation, Mango's config check, the scripts and Nixvim. It also checks
+formatting.
 
 ### Updates
 

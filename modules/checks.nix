@@ -5,9 +5,8 @@ in
 {
   # `nix flake check` builds each host in full: the whole NixOS system
   # (`system.build.toplevel`), including its Home Manager generation, scripts,
-  # Mango's config check and Nixvim. The `check` workflow evaluates these
-  # without building (`--no-build`); the `update` workflow builds them before
-  # committing a new lock.
+  # Mango's config check and Nixvim. Both the `check` and `update` workflows
+  # build these, so a failure anywhere in either system fails CI.
   perSystem =
     { system, ... }:
     {
