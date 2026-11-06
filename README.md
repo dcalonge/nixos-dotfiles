@@ -85,11 +85,11 @@ The `update` workflow runs every Monday (or by hand from the Actions tab, or
 `gh workflow run update`): it runs `nix flake update` and, only if `flake.lock`
 changed, builds both laptops with `nix flake check` before committing and
 pushing the new lock to `main`. If the lock is already up to date, it does
-nothing. The laptops never update inputs themselves; they pull that lock and
-switch (`nosu` or `SUPER+u`), so both run the same revisions. The remote lock is
-the source of truth: both `nosu` and `SUPER+u` discard any local edits to
-`flake.lock` before pulling. Pull before pushing your own changes, since the
-workflow commits to `main` too.
+nothing. The laptops never update inputs themselves; they bring that lock down
+with the rest of the checkout and switch (`nosu` or `SUPER+u`), so both run the
+same revisions. The remote lock is the source of truth: both `nosu` and
+`SUPER+u` discard any local edits to `flake.lock` before pulling. Pull before
+pushing your own changes, since the workflow commits to `main` too.
 
 ### Choosing modules per host
 
@@ -249,7 +249,7 @@ sudo passwd daniel    # if the user didn't exist before
 | Task | Command |
 | --- | --- |
 | Apply config changes | `nh os switch` (`nos`) |
-| Pull the latest `flake.lock` and switch | `nosu` (`git pull --ff-only && nh os switch`, discarding local `flake.lock` edits), or `SUPER+u` (rebuilds only if GitHub has new commits, then updates Flatpaks) |
+| Update from GitHub and switch | `nosu` (discards local `flake.lock` edits), or `SUPER+u` (rebuilds only if GitHub has new commits, then updates Flatpaks) |
 | Search packages | `nh search <name>` (`nhs`) |
 | Try a package without installing it | `nix shell nixpkgs#<name>` (`ns`) |
 | Run a package once without installing it | `nix run nixpkgs#<name>` (`nr`) |
