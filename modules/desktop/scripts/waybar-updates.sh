@@ -15,7 +15,11 @@ if timeout 30 git -C "$dir" fetch --quiet 2>/dev/null; then
       $here[0] as $h
       | $there.nodes.root.inputs | keys[]
       | select(hash($h; .) != hash($there; .))
+      | "flake input: \(.)"
     ' 2>/dev/null)
+    if [ "$(jq -r '.nodes.root.locked.narHash // empty' "$dir/flake.lock")" != "$(jq -r '.nodes.root.locked.narHash // empty' <<<"$remote_lock")" ]; then
+      entries+=("flake.lock")
+    fi
   fi
 fi
 
