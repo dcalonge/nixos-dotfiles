@@ -9,7 +9,6 @@
         zip
         file
         man-pages
-        libva-utils
         vulkan-tools
       ];
     };
