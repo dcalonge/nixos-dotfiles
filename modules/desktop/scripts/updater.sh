@@ -16,8 +16,6 @@ case "$SELECTION" in
       echo "Nothing new on GitHub, skipping the rebuild."
     fi
     echo ""
-    flatpak update -y
-    echo ""
     read -r -p "Press return to close"
   ' _ "@flakeDir@"
   ;;
