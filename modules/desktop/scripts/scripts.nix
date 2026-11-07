@@ -108,13 +108,6 @@ let
           jq
           coreutils
         ];
-        wlr-menu = script "wlr-menu" [
-          wlr-randr
-          jq
-          fuzzel
-          brightnessctl
-          gnused
-        ];
       };
     };
 in
