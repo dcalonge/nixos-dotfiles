@@ -159,7 +159,7 @@
             "SUPER,r,spawn_shell,${pkill} fuzzel || ${script "wlr-menu"}"
             "SUPER,e,spawn,${foot} -e ${lib.getExe' config.programs.yazi.package "yazi"}"
             "SUPER,n,spawn,${foot} -T neovim -e nvim"
-            "SUPER,p,spawn,${foot} -a foot-floating -e ${lib.getExe' pkgs.pulsemixer "pulsemixer"}"
+            "SUPER,p,spawn_shell,${pkill} pulsemixer || ${foot} -a foot-floating -e pulsemixer"
             "SUPER,c,spawn,${qalculate}"
             "SUPER,h,spawn,${foot} -T btop -e ${lib.getExe' config.programs.btop.package "btop"}"
             "SUPER,a,spawn_shell,${pkill} bluetui || ${foot} -a foot-floating -e ${lib.getExe' pkgs.bluetui "bluetui"}"
@@ -202,7 +202,10 @@
           ];
 
           # Written by matugen at runtime
-          source_optional = "~/.config/mango/colors.conf";
+          source_optional = [
+            "~/.config/mango/colors.conf"
+            "~/.config/mango/wlr-randr-tui.conf"
+          ];
         };
 
         bottomPrefixes = [ "source" ];
