@@ -246,7 +246,8 @@
         "mango": "mango",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",
-        "nixvim": "nixvim"
+        "nixvim": "nixvim",
+        "wlr-monitor": "wlr-monitor"
       }
     },
     "scenefx": {
@@ -301,6 +302,26 @@
         "owner": "nix-systems",
         "ref": "future-26.11",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "wlr-monitor": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794057341,
+        "narHash": "sha256-copv70/wPjzdgktC06FsWyyPd967sgDNj3tUuZuxnRk=",
+        "owner": "dcalonge",
+        "repo": "wlr-monitor",
+        "rev": "1eb50c65c38eae836f3848706682809f493523f0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dcalonge",
+        "repo": "wlr-monitor",
         "type": "github"
       }
     }

@@ -20,6 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wlr-monitor = {
+      url = "github:dcalonge/wlr-monitor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim";
     };

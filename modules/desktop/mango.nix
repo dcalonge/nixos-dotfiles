@@ -202,10 +202,7 @@
           ];
 
           # Written by matugen at runtime
-          source_optional = [
-            "~/.config/mango/colors.conf"
-            "~/.config/mango/wlr-randr-tui.conf"
-          ];
+          source_optional = [ "~/.config/mango/colors.conf" ];
         };
 
         bottomPrefixes = [ "source" ];
