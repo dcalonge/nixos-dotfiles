@@ -312,11 +312,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794152739,
-        "narHash": "sha256-46ICxMxxnA7FgmiNKqkRqmqSWkCzbV1eY1ONugq6aCs=",
+        "lastModified": 1794167143,
+        "narHash": "sha256-3zFqgEpFNz0wGvAiTQU6tRuqxZg0VBg0ZSyBWqIMAFg=",
         "owner": "dcalonge",
         "repo": "wlr-monitor",
-        "rev": "ee0ee2bb6937be0a39271c40ec81beb228d40a20",
+        "rev": "d3bef3e199d6b0b7dbe5a4b430f9dac8d3bf7296",
         "type": "github"
       },
       "original": {
