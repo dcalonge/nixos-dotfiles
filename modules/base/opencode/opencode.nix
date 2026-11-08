@@ -19,6 +19,7 @@
             effect = "allow";
           }
         ];
+        plugins = [ "@dietrichgebert/ponytail" ];
         mcp.servers.youcom = {
           type = "remote";
           url = "https://api.you.com/mcp?profile=free";
