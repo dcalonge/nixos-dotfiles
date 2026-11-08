@@ -6,7 +6,7 @@
     programs.wlr-monitor = {
       enable = true;
       mango.enable = true;
-      package = inputs.wlr-monitor.packages.${pkgs.stdenv.hostPlatform.system}.wlr-monitor-bin-latest;
+      package = inputs.wlr-monitor.packages.${pkgs.stdenv.hostPlatform.system}.default;
     };
   };
 }
