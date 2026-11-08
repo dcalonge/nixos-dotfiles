@@ -6,7 +6,6 @@
     programs.wlr-monitor = {
       enable = true;
       mango.enable = true;
-      package = inputs.wlr-monitor.packages.${builtins.currentSystem}.default;
     };
   };
 }
