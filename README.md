@@ -250,6 +250,7 @@ sudo passwd daniel    # if the user didn't exist before
 | --- | --- |
 | Apply config changes | `nh os switch` (`nos`) |
 | Update from GitHub and switch | `nosu` (discards local `flake.lock` edits), or `SUPER+u` (rebuilds only if GitHub has new commits, then updates Flatpaks) |
+| Update wlr-monitor only | `nh os switch --impure` — `wlr-monitor-bin-latest` fetches the latest GitHub release at eval time, so `--impure` is required |
 | Search packages | `nh search <name>` (`nhs`) |
 | Try a package without installing it | `nix shell nixpkgs#<name>` (`ns`) |
 | Run a package once without installing it | `nix run nixpkgs#<name>` (`nr`) |
