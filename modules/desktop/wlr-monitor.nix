@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   flake.modules.homeManager.desktop = {
     imports = [ inputs.wlr-monitor.homeModules.default ];
