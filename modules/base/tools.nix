@@ -1,5 +1,13 @@
 {
   flake.modules.homeManager.base = {
+    programs.git = {
+      enable = true;
+      settings.user = {
+        name = "Daniel Calonge Jiménez";
+        email = "dcalonge01@gmail.com";
+      };
+    };
+
     programs.yazi = {
       enable = true;
       enableFishIntegration = true;
