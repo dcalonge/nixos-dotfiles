@@ -51,6 +51,9 @@
             "widget.gtk.native-context-menus" = true;
             "media.videocontrols.picture-in-picture.enabled" = false;
             "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+            "font.name.serif.x-western" = "JetBrainsMono Nerd Font";
+            "font.name.sans-serif.x-western" = "JetBrainsMono Nerd Font";
+            "font.name.monospace.x-western" = "JetBrainsMono Nerd Font";
           };
 
           search = {
