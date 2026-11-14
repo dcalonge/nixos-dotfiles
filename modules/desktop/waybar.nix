@@ -129,8 +129,8 @@
             format-muted = "󰖁";
             format-source = "󰍬 ";
             format-source-muted = "";
-            on-click-right = "${lib.getExe' config.programs.foot.package "foot"} -a foot-floating -e ${lib.getExe' pkgs.pulsemixer "pulsemixer"}";
-            on-click = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            on-click = "${lib.getExe' config.programs.foot.package "foot"} -a foot-floating -e ${lib.getExe' pkgs.pulsemixer "pulsemixer"}";
+            on-click-right = "${lib.getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
             reverse-scrolling = true;
             tooltip = true;
             tooltip-format = "Volume: {volume}%";
