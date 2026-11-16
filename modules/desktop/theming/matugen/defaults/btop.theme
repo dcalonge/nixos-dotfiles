@@ -1,35 +1,35 @@
 # Main background and foreground
-theme[main_bg] = "#171216"
-theme[main_fg] = "#ebdfe6"
+theme[main_bg] = "#1a120d"
+theme[main_fg] = "#f0dfd7"
 
 # Title and headings
-theme[title] = "#ebdfe6"
-theme[hi_fg] = "#efb4e9"
+theme[title] = "#f0dfd7"
+theme[hi_fg] = "#ffb68d"
 
 # Selected/Active items
-theme[selected_bg] = "#efb4e9"
-theme[selected_fg] = "#4b1f4b"
+theme[selected_bg] = "#ffb68d"
+theme[selected_fg] = "#532200"
 
 # Inactive items
-theme[inactive_fg] = "#d1c3cc"
+theme[inactive_fg] = "#d7c2b8"
 
 # Graph/Chart colors
-theme[graph_text] = "#ebdfe6"
-theme[meter_bg] = "#4e444b"
-theme[proc_misc] = "#f6b8aa"
-theme[proc_start] = "#efb4e9"
-theme[proc_mid] = "#643663"
-theme[proc_end] = "#d9bfd3"
+theme[graph_text] = "#f0dfd7"
+theme[meter_bg] = "#52443c"
+theme[proc_misc] = "#cdc991"
+theme[proc_start] = "#ffb68d"
+theme[proc_mid] = "#6f3813"
+theme[proc_end] = "#e5beaa"
 
 # Cpu/Mem/Disk graphs
-theme[cpu_start] = "#efb4e9"
-theme[cpu_mid] = "#643663"
-theme[cpu_end] = "#f6b8aa"
+theme[cpu_start] = "#ffb68d"
+theme[cpu_mid] = "#6f3813"
+theme[cpu_end] = "#cdc991"
 
-theme[mem_start] = "#efb4e9"
-theme[mem_mid] = "#643663"
-theme[mem_end] = "#f6b8aa"
+theme[mem_start] = "#ffb68d"
+theme[mem_mid] = "#6f3813"
+theme[mem_end] = "#cdc991"
 
-theme[net_start] = "#efb4e9"
-theme[net_mid] = "#643663"
-theme[net_end] = "#f6b8aa"
+theme[net_start] = "#ffb68d"
+theme[net_mid] = "#6f3813"
+theme[net_end] = "#cdc991"

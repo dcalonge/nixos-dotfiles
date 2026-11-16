@@ -9,20 +9,20 @@
 }
 
 #window-box {
-    background-color: #171216;
-    color: #ebdfe6;
+    background-color: #1a120d;
+    color: #f0dfd7;
     margin: 18px;
     padding: 48px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 #window-box #clock-label {
-    color: #ebdfe6;
+    color: #f0dfd7;
     font-size: 4em;
 }
 
 #window-box #date-label {
-    color: #d1c3cc;
+    color: #d7c2b8;
 }
 
 #window-box #input-label {
@@ -34,9 +34,9 @@
 
 #window-box #input-field {
     margin-top: 16px;
-    background-color: #2e282d;
-    color: #ebdfe6;
-    border: 1px solid #998d96;
+    background-color: #312823;
+    color: #f0dfd7;
+    border: 1px solid #9f8d84;
     min-height: 32px;
     padding-left: 1em;
     padding-right: 1em;
@@ -44,27 +44,27 @@
 }
 
 #window-box #input-field:focus {
-    border-color: #efb4e9;
+    border-color: #ffb68d;
 }
 
 #window-box #unlock-button {
-    background-color: #efb4e9;
-    color: #4b1f4b;
+    background-color: #ffb68d;
+    color: #532200;
     padding: 6px 12px;
 }
 
 #window-box #unlock-button:hover {
-    background-color: #643663;
-    color: #ffd6f8;
+    background-color: #6f3813;
+    color: #ffdbc9;
 }
 
 #window-box #unlock-button:active {
-    background-color: #d9bfd3;
-    color: #3c2b3b;
+    background-color: #e5beaa;
+    color: #432b1d;
 }
 
 #window-box #warning-label {
-    color: #f6b8aa;
+    color: #cdc991;
 }
 
 #window-box #error-label {

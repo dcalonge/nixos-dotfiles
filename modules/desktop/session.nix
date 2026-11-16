@@ -27,6 +27,13 @@ in
       wallpaper = "${config.home.homeDirectory}/Pictures/wallpaper";
     in
     {
+      home.activation.seedWallpaper = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        if [ ! -e ${wallpaper} ]; then
+          run ln -sfn ${./theming/wallpaper.jpg} ${wallpaper}
+          run systemctl --user restart swaybg || true
+        fi
+      '';
+
       home.sessionVariables = {
         GRIM_DEFAULT_DIR = "${config.home.homeDirectory}/Pictures/Screenshots/";
         ELECTRON_OZONE_PLATFORM_HINT = "auto";
