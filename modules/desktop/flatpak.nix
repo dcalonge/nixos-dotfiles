@@ -11,7 +11,10 @@
           location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
         }
       ];
-      packages = [ "com.stremio.Stremio" ];
+      packages = [
+        "com.stremio.Stremio"
+        "org.gtk.Gtk3theme.adw-gtk3-dark"
+      ];
       update = {
         onActivation = true;
       };
