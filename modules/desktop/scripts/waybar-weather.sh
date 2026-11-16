@@ -8,7 +8,7 @@ else
 fi
 
 weather_json=$(
-  curl -fsS --max-time 3 "$url" 2>/dev/null
+  curl -fsS --max-time 5 --retry 5 --retry-delay 3 --retry-all-errors "$url" 2>/dev/null
 ) || exit 1
 
 # -----------------------------
