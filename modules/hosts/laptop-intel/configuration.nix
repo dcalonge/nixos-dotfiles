@@ -35,9 +35,15 @@ in
 
       hardware.cpu.intel.updateMicrocode = true;
 
-      hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
+      hardware.graphics.extraPackages = [
+        pkgs.intel-media-driver
+        pkgs.libvdpau-va-gl
+      ];
 
-      environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+      environment.sessionVariables = {
+        LIBVA_DRIVER_NAME = "iHD";
+        VDPAU_DRIVER = "va_gl";
+      };
 
       services.thermald.enable = true;
 

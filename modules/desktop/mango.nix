@@ -38,7 +38,6 @@
       pkill = lib.getExe' pkgs.procps "pkill";
       systemctl = lib.getExe' pkgs.systemd "systemctl";
       playerctl = lib.getExe' pkgs.playerctl "playerctl";
-      wlr-randr = lib.getExe' pkgs.wlr-randr "wlr-randr";
       qalculate = lib.getExe' pkgs.qalculate-gtk "qalculate-gtk";
     in
     {
@@ -194,11 +193,6 @@
             "SUPER,btn_left,moveresize,curmove"
             "SUPER,btn_middle,togglefloating"
             "SUPER+CTRL,btn_left,moveresize,curresize"
-          ];
-
-          switchbind = [
-            "fold,spawn,${wlr-randr} --output eDP-1 --off"
-            "unfold,spawn,${wlr-randr} --output eDP-1 --on"
           ];
 
           # Written by matugen at runtime
