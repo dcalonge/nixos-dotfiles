@@ -10,7 +10,12 @@ case "$SELECTION" in
     if [ "$before" != "$(git -C "$dir" rev-parse HEAD)" ]; then
       nh os switch "$dir"
     else
-      echo "Nothing new on GitHub, skipping the rebuild."
+      echo "Nothing new on GitHub, checking Flatpak."
+      if [ -n "$(flatpak remote-ls --updates --columns=application 2>/dev/null)" ]; then
+        flatpak update -y
+      else
+        echo "No Flatpak updates."
+      fi
     fi
     echo ""
     read -r -p "Press return to close"
