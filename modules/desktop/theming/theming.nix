@@ -20,81 +20,72 @@
           input = "waybar-colors.css";
           output = "${cfgHome}/waybar/colors.css";
           hook = "pkill -SIGUSR2 waybar || true";
-          default = "waybar-colors.css";
         };
         fuzzel = {
           input = "fuzzel-colors.ini";
           output = "${cfgHome}/fuzzel/colors.ini";
-          default = "fuzzel-colors.ini";
         };
         foot = {
           input = "foot-colors.ini";
           output = "${cfgHome}/foot/colors.ini";
           hook = "pkill -USR1 foot || true";
-          default = "foot-colors.ini";
         };
         gtk3 = {
           input = "gtk3.css";
           output = "${cfgHome}/gtk-3.0/matugen-colors.css";
           hook = "pkill -f xdg-desktop-portal-gtk";
-          default = "gtk3.css";
         };
         gtk4 = {
           input = "gtk4.css";
           output = "${cfgHome}/gtk-4.0/matugen-colors.css";
-          default = "gtk4.css";
         };
         mako = {
           input = "mako.conf";
           output = "${cfgHome}/mako/colors";
           hook = "makoctl reload || true";
-          default = "mako-colors";
         };
         nvim = {
           input = "nvim.yaml";
           output = "${cfgHome}/nvim/lua/config/matugen-theme.yaml";
           hook = "pkill -USR1 nvim || true";
-          default = "nvim.yaml";
         };
         btop = {
           input = "btop.theme";
           output = "${cfgHome}/btop/themes/matugen.theme";
-          default = "btop.theme";
         };
         yazi = {
           input = "yazi.toml";
           output = "${cfgHome}/yazi/theme.toml";
-          default = "yazi.toml";
         };
         zathura = {
           input = "zathurarc";
           output = "${cfgHome}/zathura/matugen-colors";
-          default = "zathura-colors";
         };
         gtklock = {
           input = "gtklock.css";
           output = "${cfgHome}/gtklock/style.css";
-          default = "gtklock.css";
         };
         pywalfox = {
           input = "pywalfox-colors.json";
           output = "${config.xdg.cacheHome}/wal/colors.json";
           hook = "pywalfox update || true";
-          default = "pywalfox-colors.json";
         };
         mango = {
           input = "mango.conf";
           output = "${cfgHome}/mango/colors.conf";
           hook = "mmsg dispatch reload_config";
-          default = "mango-colors.conf";
         };
       };
 
       matugenConfig = (pkgs.formats.toml { }).generate "matugen-config.toml" {
-        config = { };
+        config = {
+          source_color_index = 0;
+        };
         templates = lib.mapAttrs (
           _: t:
           {
+            mode = "Dark";
+            type = "SchemeTonalSpot";
             input_path = "${templates}/${t.input}";
             output_path = t.output;
           }
@@ -115,7 +106,7 @@
         lib.concatStrings (
           lib.mapAttrsToList (_: t: ''
             if [ ! -e ${lib.escapeShellArg t.output} ]; then
-              run install -Dm644 ${defaults}/${t.default} ${lib.escapeShellArg t.output}
+              run install -Dm644 ${defaults}/${t.input} ${lib.escapeShellArg t.output}
             fi
           '') matugenTargets
         )

@@ -11,10 +11,7 @@ set_wallpaper() {
 
   systemctl --user restart swaybg.service
 
-  matugen image "$IMAGE" \
-    -m dark \
-    -t scheme-tonal-spot \
-    --source-color-index 0
+  matugen image "$IMAGE"
 }
 
 random() {
