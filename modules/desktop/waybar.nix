@@ -124,7 +124,6 @@
               "󰕿"
               "󰖀"
               "󰕾"
-              "󰝝"
             ];
             format-muted = "󰖁";
             format-source = "󰍬 ";
