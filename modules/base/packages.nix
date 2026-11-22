@@ -2,6 +2,8 @@
   flake.modules.nixos.base =
     { pkgs, ... }:
     {
+      documentation.nixos.enable = false;
+
       environment.systemPackages = with pkgs; [
         wget
         curl
