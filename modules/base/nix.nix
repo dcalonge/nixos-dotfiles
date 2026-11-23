@@ -11,6 +11,10 @@ in
       ];
       auto-optimise-store = true;
       trusted-users = [ "@wheel" ];
+      extra-substituters = [ "https://dcalonge-nixos.cachix.org" ];
+      extra-trusted-public-keys = [
+        "dcalonge-nixos.cachix.org-1:limaHGVVie6OiPhOFQQmWDLrQKQrByCbmxZgWjzoeHU="
+      ];
     };
 
     programs.nh = {
