@@ -12,8 +12,8 @@
         monitor_rule = "name:^eDP-1$,scale:1.2";
 
         switchbind = [
-          "fold,spawn,${wlr-randr} --output eDP-1 --off"
-          "unfold,spawn,${wlr-randr} --output eDP-1 --on"
+          "lid_on,spawn,${wlr-randr} --output eDP-1 --off"
+          "lid_off,spawn,${wlr-randr} --output eDP-1 --on"
         ];
       };
     };
