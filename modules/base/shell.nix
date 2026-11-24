@@ -49,6 +49,9 @@ in
         shellAliases.cat = "bat";
 
         functions.prompt_login.body = "true";
+        functions.fish_prompt.body = ''
+          echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) (fish_vcs_prompt) ' $ '
+        '';
       };
 
       programs.eza = {
